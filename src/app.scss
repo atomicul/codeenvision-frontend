@@ -1,0 +1,14 @@
+.app {
+  display: flex;
+  height: 100%;
+  & > section {
+    height: 100%;
+  }
+  & > section:first-of-type {
+    flex: 1;
+  }
+  & > section:last-of-type {
+    width: min(100%, 500px);
+    height: 100%;
+  }
+}
