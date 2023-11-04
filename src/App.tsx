@@ -10,7 +10,7 @@ function App() {
   const panelRef = useRef<PanelHandle>()
 
   useEffect(() => {
-    fetch("http://localhost:3000/sensors", {
+    fetch("https://localhost:3000/sensors", {
       method: "GET",
     }).then((response) => {
       return response.json()

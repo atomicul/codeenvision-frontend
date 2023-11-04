@@ -37,7 +37,7 @@ export default forwardRef(({ sensors }: Props, ref) => {
   useEffect(() => {
     if (sensorIdx == null || !sensors) return;
     const sensor = sensors[sensorIdx];
-    fetch("http://localhost:3000/readings/", {
+    fetch("https://localhost:3000/readings/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export default forwardRef(({ sensors }: Props, ref) => {
     <h1></h1>
     {!sensors ? <h2>loading</h2> :
       <Select fullWidth value={sensorIdx} onChange={(e) => { setSensorIdx(e.target.value as number) }}>
-        {!!sensors && sensors.map((sensor, idx) => <MenuItem value={idx}>{sensor.id}</MenuItem>)}
+        {!!sensors && sensors.map((sensor, idx) => <MenuItem value={idx}>{sensor.friendlyName}</MenuItem>)}
       </Select>
     }
     {plotInfo &&
