@@ -61,70 +61,29 @@ export default forwardRef(({ sensors }: Props, ref) => {
     }
     {plotInfo &&
       <>
-        <div>
-          <Line
-            datasetIdKey='1'
-            data={{
-              labels: plotInfo.map((reading) => new Date(reading.day).toDateString()),
-              datasets: [
-                {
-                  label: 'temperature (°C)',
-                  data: plotInfo.map((reading) => reading.temperature),
-                  backgroundColor: 'red',
-                  borderColor: 'red'
-                }
-              ],
-            }}
-          />
-        </div>
-        <div>
-          <Line
-            datasetIdKey='2'
-            data={{
-              labels: plotInfo.map((reading) => new Date(reading.day).toDateString()),
-              datasets: [
-                {
-                  label: 'humidity (%)',
-                  data: plotInfo.map((reading) => reading.humidity),
-                  backgroundColor: 'blue',
-                  borderColor: 'blue'
-                }
-              ],
-            }}
-          />
-        </div>
-        <div>
-          <Line
-            datasetIdKey='3'
-            data={{
-              labels: plotInfo.map((reading) => new Date(reading.day).toDateString()),
-              datasets: [
-                {
-                  label: 'ppm',
-                  data: plotInfo.map((reading) => reading.ppm),
-                  backgroundColor: 'green',
-                  borderColor: 'green'
-                }
-              ],
-            }}
-          />
-        </div>
-        <div>
-          <Line
-            datasetIdKey='4'
-            data={{
-              labels: plotInfo.map((reading) => new Date(reading.day).toDateString()),
-              datasets: [
-                {
-                  label: 'dust',
-                  data: plotInfo.map((reading) => reading.dustConcentration),
-                  backgroundColor: 'yellow',
-                  borderColor: 'yellow'
-                }
-              ],
-            }}
-          />
-        </div>
+        {
+          [{ data: plotInfo.map((reading) => reading.temperature), label: 'Temperature (C)', color: 'red' },
+          { data: plotInfo.map((reading) => reading.humidity), label: 'Humidity (%)', color: 'blue' },
+          { data: plotInfo.map((reading) => reading.ppm), label: 'Particles per million', color: 'yellow' },
+          { data: plotInfo.map((reading) => reading.dustConcentration), label: 'Dust Concentration', color: 'green' }]
+            .map(({ label, data, color }, idx) => {
+              return <div>
+                <Line
+                  datasetIdKey={idx.toString()}
+                  data={{
+                    labels: plotInfo.map((reading) => new Date(reading.day).toDateString()),
+                    datasets: [
+                      {
+                        label: label,
+                        data: data,
+                        borderColor: color
+                      }
+                    ],
+                  }}
+                />
+              </div>
+            })
+        }
       </>
     }
   </section >
