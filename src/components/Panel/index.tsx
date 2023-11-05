@@ -1,9 +1,11 @@
 import { MenuItem, Select } from "@mui/material";
-import { useEffect, useImperativeHandle, useState, forwardRef } from "react";
+import { useEffect, useImperativeHandle, useState, forwardRef, ReactNode } from "react";
 import './style.scss';
 import { Line } from "react-chartjs-2";
 import { CategoryScale, Chart, Legend, LineElement, LinearScale, PointElement, Title, Tooltip } from "chart.js";
 import { Sensor, Reading } from "../../interfaces";
+import Cookies from 'js-cookie';
+
 Chart.register(
   CategoryScale,
   LinearScale,
@@ -37,10 +39,12 @@ export default forwardRef(({ sensors }: Props, ref) => {
   useEffect(() => {
     if (sensorIdx == null || !sensors) return;
     const sensor = sensors[sensorIdx];
+    const token = Cookies.get('token');
     fetch("https://localhost:3000/readings/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify({ id: sensor.id })
     }).then((response) => {
@@ -49,7 +53,7 @@ export default forwardRef(({ sensors }: Props, ref) => {
   }, [sensorIdx]);
 
   return <section className="panel">
-    <h1></h1>
+    <h1>Air Moniotor</h1>
     {!sensors ? <h2>loading</h2> :
       <Select fullWidth value={sensorIdx} onChange={(e) => { setSensorIdx(e.target.value as number) }}>
         {!!sensors && sensors.map((sensor, idx) => <MenuItem value={idx}>{sensor.friendlyName}</MenuItem>)}

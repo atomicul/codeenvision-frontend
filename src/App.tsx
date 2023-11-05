@@ -4,17 +4,22 @@ import Panel, { Handle as PanelHandle } from './components/Panel';
 import { Sensor } from './interfaces';
 import Map, { Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import Cookies from 'js-cookie';
 
 function App() {
   const [sensors, setSensors] = useState<Sensor[] | null>(null);
   const panelRef = useRef<PanelHandle>()
 
   useEffect(() => {
+    const token = Cookies.get('token');
     fetch("https://localhost:3000/sensors", {
       method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      }
     }).then((response) => {
       return response.json()
-    }).then((data) => { setSensors(data), console.log(data) })
+    }).then((data) => { setSensors(data) })
   }, []);
 
   return (

@@ -1,0 +1,16 @@
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > form {
+    background-color: whitesmoke;
+    border-radius: 5px;
+    padding: 20px 30px;
+    width: min(500px, 100%);
+
+    & > :not(h1) {
+      margin-bottom: 10px;
+    }
+  }
+}
