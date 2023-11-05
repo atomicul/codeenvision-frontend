@@ -53,7 +53,7 @@ export default forwardRef(({ sensors }: Props, ref) => {
   }, [sensorIdx]);
 
   return <section className="panel">
-    <h1>Air Moniotor</h1>
+    <h1>Air Monitor</h1>
     {!sensors ? <h2>loading</h2> :
       <Select fullWidth value={sensorIdx} onChange={(e) => { setSensorIdx(e.target.value as number) }}>
         {!!sensors && sensors.map((sensor, idx) => <MenuItem value={idx}>{sensor.friendlyName}</MenuItem>)}
